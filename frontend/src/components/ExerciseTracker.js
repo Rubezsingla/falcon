@@ -7,8 +7,8 @@ const ExerciseTracker = () => {
   const [backgroundImage, setBackgroundImage] = useState(null);
   const animationFrameRef = useRef(null);
   const squatState = useRef("START"); // START, DOWN, UP
-  const cooldown = useRef(false); // Cooldown flag to prevent overcounting
-  const downSince = useRef(null); // Timestamp when the state changed to "DOWN"
+  const initialMotion = useRef(0); // Store initial motion
+  const cooldown = useRef(false); // Move cooldown ref to component scope
 
   // ROI (Region of Interest) coordinates (adjust these!)
   const roi = {
@@ -18,11 +18,8 @@ const ExerciseTracker = () => {
     height: 200,
   };
 
-  // Motion Threshold (adjust this!)
-  const motionThreshold = 8000; // Increased!
-
-  // Minimum Squat Duration (adjust this!) - in milliseconds
-  const minSquatDuration = 500;
+  // Define a standing motion factor
+  const standingMotionFactor = 0.2;
 
   const captureBackground = (video) => {
     const canvas = document.createElement("canvas");
@@ -87,6 +84,7 @@ const ExerciseTracker = () => {
         };
 
         const detectMotion = async () => {
+
           if (!isPlaying) {
             cancelAnimationFrame(animationFrameRef.current);
             return;
@@ -95,26 +93,31 @@ const ExerciseTracker = () => {
           const motion = calculateMotion(video, backgroundImage);
           console.log("Motion:", motion);
 
-          if (squatState.current === "START" && motion > motionThreshold && !cooldown.current) {
-            squatState.current = "DOWN";
-            downSince.current = Date.now(); // Record timestamp
-            console.log("State Transition: START -> DOWN");
-          } else if (squatState.current === "DOWN" && motion < motionThreshold) {
-            // Check if minimum squat duration has passed
-            if (Date.now() - downSince.current >= minSquatDuration) {
-              setSquatCount((prevCount) => prevCount + 1);
-              squatState.current = "START";
-              console.log("State Transition: DOWN -> START, Squat counted!");
+          //Capture the initial Motion
+          if (initialMotion.current === 0 && backgroundImage) {
+              initialMotion.current = motion;
+              console.log("Initial Motion Captured", initialMotion.current);
+              return;
+          }
 
-               // Activate cooldown to prevent immediate recounting
-               cooldown.current = true;
-               setTimeout(() => {
-                 cooldown.current = false;
-                 console.log("Cooldown Ended");
-               }, 500); // Cooldown for 500ms (adjust as needed)
-            } else {
-              console.log("Minimum squat duration not met.");
-            }
+          //Define Dynamic Threshold for Squat and Stand
+          const downThreshold = initialMotion.current * 0.5; // 50% of initial motion
+          const upThreshold = initialMotion.current * standingMotionFactor; // percentage of initial motion
+
+          if (squatState.current === "START" && motion > downThreshold && !cooldown.current) {
+            squatState.current = "DOWN";
+            console.log("State Transition: START -> DOWN");
+          } else if (squatState.current === "DOWN" && motion < upThreshold) {
+            setSquatCount((prevCount) => prevCount + 1);
+            squatState.current = "START";
+            console.log("State Transition: DOWN -> START, Squat counted!");
+
+             // Activate cooldown to prevent immediate recounting
+             cooldown.current = true;
+             setTimeout(() => {
+               cooldown.current = false;
+               console.log("Cooldown Ended");
+             }, 500); // Cooldown for 500ms (adjust as needed)
           } else {
             console.log("No state transition.");
           }
@@ -159,11 +162,19 @@ const ExerciseTracker = () => {
     const video = videoRef.current;
     if (video) {
       const background = captureBackground(video);
-      setBackgroundImage(background);
+
+      // Create an Image object and set its onload event
+      const img = new Image();
+      img.onload = () => {
+        console.log("Background image loaded successfully.");
+        setBackgroundImage(background);
+      };
+      img.src = background;
     }
     setSquatCount(0);
     setIsPlaying(true);
     squatState.current = "START";
+    initialMotion.current = 0; // Reset initial motion
     console.log("Exercise started.");
   };
 
@@ -174,14 +185,7 @@ const ExerciseTracker = () => {
 
   return (
     <div>
-      <video
-        ref={videoRef}
-        style={{
-          transform: "scaleX(-1)",
-          width: "800px",
-          height: "600px",
-        }}
-      />
+      <video ref={videoRef} style={{ transform: "scaleX(-1)", width: "800px", height: "600px" }} />
       <div>
         <h2>Squat Count: {squatCount}</h2>
         {!isPlaying ? (
@@ -192,6 +196,6 @@ const ExerciseTracker = () => {
       </div>
     </div>
   );
-};  
+};
 
 export default ExerciseTracker;
