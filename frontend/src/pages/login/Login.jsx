@@ -6,50 +6,60 @@ import "./login.css";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
-    username: undefined,
-    password: undefined,
-    email: undefined,
+    username: "",
+    password: "",
+    email: "",
   });
 
   const { loading, error, dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate();
-  const location= useLocation();
+  const location = useLocation();
 
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const handleClickR = async (e) => {
-    e.preventDefault();
-    dispatch({ type: "LOGIN_START" });
-    try {
-      const res = await axios.post("/auth/register", credentials);
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
-      navigate("/"); // Redirect to home after successful registration
-    } catch (err) {
-      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
-    }
-  };
+  // API base URL (backend server)
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api/auth";
 
-  const handleClick = async (e) => {
+const handleRegister = async (e) => {
+  e.preventDefault();
+  dispatch({ type: "LOGIN_START" });
+
+  try {
+    const res = await axios.post("http://localhost:5000/api/auth/register", credentials);
+    dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+    navigate("/"); // Redirect to home after successful registration
+  } catch (err) {
+    dispatch({
+      type: "LOGIN_FAILURE",
+      payload: err.response?.data || { message: "Something went wrong" },
+    });
+  }
+};
+
+
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post("/auth/login", credentials);
+      const res = await axios.post(`${API_URL}/login`, credentials);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
       navigate("/");
     } catch (err) {
-      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
+      dispatch({ type: "LOGIN_FAILURE", payload: err.response?.data || { message: "Invalid credentials" } });
     }
   };
 
   const [isLogin, setIsLogin] = useState(location.pathname === "/login");
+
   useEffect(() => {
     if (isLogin) {
-      navigate("/login");  // Update URL to /login
+      navigate("/login");
     } else {
-      navigate("/register");  // Update URL to /register
+      navigate("/register");
     }
   }, [isLogin, navigate]);
 
@@ -58,16 +68,10 @@ const Login = () => {
       <div className="overlay"></div>
       <div className="form-container">
         <div className="form-toggle">
-          <button
-            className={isLogin ? "active" : ""}
-            onClick={() => setIsLogin(true)}
-          >
+          <button className={isLogin ? "active" : ""} onClick={() => setIsLogin(true)}>
             Login
           </button>
-          <button
-            className={!isLogin ? "active" : ""}
-            onClick={() => setIsLogin(false)}
-          >
+          <button className={!isLogin ? "active" : ""} onClick={() => setIsLogin(false)}>
             Register
           </button>
         </div>
@@ -77,72 +81,54 @@ const Login = () => {
               <h2>Login Form</h2>
               <input
                 type="text"
-                placeholder="username"
+                placeholder="Username"
                 id="username"
                 onChange={handleChange}
                 className="lInput"
               />
               <input
                 type="password"
-                placeholder="password"
+                placeholder="Password"
                 id="password"
                 onChange={handleChange}
                 className="lInput"
               />
-              <a href="#">Forgot Password?</a>
-              <button
-                disabled={loading}
-                onClick={handleClick}
-                className="lButton"
-              >
+              <button disabled={loading} onClick={handleLogin} className="lButton">
                 Login
               </button>
-              <p>
-                Not a Member?{" "}
-                <a href="#" onClick={() => setIsLogin(false)}>
-                  Register now
-                </a>
-              </p>
+              {error && <div className="error-message">{error.message}</div>}
             </div>
-            {error && <div className="error-message">{error.message}</div>}
-
           </>
         ) : (
           <>
             <div className="form">
-              <h2>Register </h2>
+              <h2>Register</h2>
               <input
                 type="text"
-                placeholder="username"
+                placeholder="Username"
                 id="username"
                 onChange={handleChange}
                 className="rInput"
               />
               <input
-              type="email"
-              placeholder="email"
-              id="email"
-              onChange={handleChange}
-              className="rInput"
+                type="email"
+                placeholder="Email"
+                id="email"
+                onChange={handleChange}
+                className="rInput"
               />
               <input
-              type="password"
-              placeholder="password"
-              id="password"
-              onChange={handleChange}
-              className="rInput"
+                type="password"
+                placeholder="Password"
+                id="password"
+                onChange={handleChange}
+                className="rInput"
               />
-              <button disabled={loading} onClick={handleClickR} className="rButton">
+              <button disabled={loading} onClick={handleRegister} className="rButton">
                 Register
               </button>
-              <p>
-                Have an account?{" "}
-                <a href="#" onClick={() => setIsLogin(true)}>
-                  Login now
-                </a>
-              </p>
+              {error && <div className="error-message">{error.message}</div>}
             </div>
-            {error && <div className="error-message">{error.message}</div>}
           </>
         )}
       </div>
