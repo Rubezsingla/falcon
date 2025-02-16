@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const UserSchema = new mongoose.Schema(
   {
     username: {
@@ -13,7 +14,7 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: false, // Make password optional for Google login
     },
     isAdmin: {
       type: Boolean,
