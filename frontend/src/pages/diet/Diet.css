@@ -77,8 +77,8 @@
 
 /* Scope buttons */
 .diet-container button {
-    background: #ffcc00;
-    border: none;
+    background: #161616;
+    border: white;
     padding: 10px 20px;
     font-size: 18px;
     border-radius: 20px;
@@ -88,9 +88,18 @@
 }
 
 .diet-container button:hover {
-    background: #ff9900;
+    background: #d5d3d1;
 }
-
+.navbar p{
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+.navbar span{
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
 /* Scope result section */
 .diet-container .result {
     margin-top: 20px;

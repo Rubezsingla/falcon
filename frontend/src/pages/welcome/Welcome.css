@@ -28,6 +28,16 @@
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+.navbar p{
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+.navbar span{
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
 
 .navbar button:hover {
     background: white;
