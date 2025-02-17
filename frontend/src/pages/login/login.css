@@ -1,126 +1,136 @@
 /* Reset default body margins */
 body {
   margin: 0;
-  overflow: hidden; /* Hide scrollbars */
+  overflow: hidden;
   font-family: 'Poppins', sans-serif;
+  background-color: #1A1A1A;
 }
 
 html {
-  height: 100%; /* Ensure full height */
+  height: 100%;
 }
 
+/* Main Container */
 .container {
   display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
   width: 100%;
   background-image: url("https://th.bing.com/th/id/OIP.nfrNyFIggCf7nHc55QGNfwAAAA?rs=1&pid=ImgDetMain");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  align-items: center;
-  justify-content: center; /* Changed to center */
-  gap: 50px; /* Reduced gap */
+  position: relative;
+  gap: 100px; /* Increased gap to move login popup right */
+  padding: 20px;
 }
 
+/* Dark Overlay */
 .overlay {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(45, 43, 44, 0.5); /* Darker overlay */
+  width: 100%;
+  height: 100%;
+  background-color: rgba(26, 26, 26, 0.7); /* Darker overlay */
   z-index: 1;
 }
 
+/* Text Container */
 .text-container {
   color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 50%; /* Adjusted width */
+  max-width: 50%;
   z-index: 2;
-  text-align: left; /* Align text to the left */
+  text-align: left;
+  margin-left: -50px; /* Shift text slightly left */
 }
 
 .text-container p {
-  font-size: 2.2em; /* Increased font size */
-  margin-bottom: 20px; 
-  /* Increased margin */
-  line-height: 0.4; /* Adjusted line height */
+  font-size: 2.2em;
+  margin-bottom: 15px;
+  line-height: 0.3;
 }
 
+/* Styling for First Line */
 .text-container p:nth-child(1) {
-  font-weight: bold; /* Make "Flex It Out" bold */
-  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
+  font-family: 'Roboto', sans-serif; /* Changed font */
+  margin-bottom: 25px;
+  font-size: 6.5rem;
+  text-transform: uppercase;
 }
 
+/* Styling for the Curvy Box */
 .text-container p:nth-child(2) {
-  border: 2px solid #FFF6E0; /* Add border */
-  padding: 12px 20px; /* Adjusted padding */
-  border-radius: 30px; /* Increased roundness */
+  background-color: #faefb3; /* Solid color fill */
+  color: #272829;
+  padding: 14px 24px;
+  border-radius: 30px;
   display: inline-block;
-  font-size: 1.8em; /* Adjusted font size */
-  font-family: 'Montserrat', sans-serif;
+  font-size: 2em;
+  font-family: 'Roboto', sans-serif; /* Changed font */
+  text-align: center;
 }
 
-.text-container p:nth-child(3) {
-  max-width: 90%; /* Adjusted width */
-  font-family: 'Montserrat', sans-serif;
-}
-.text-container p:nth-child(4) {
-  max-width: 90%; /* Adjusted width */
-  font-family: 'Montserrat', sans-serif;
-}
 
+/* Form Container - Shifted Right */
 .form-container {
-  background-color: #272829;
-  padding: 30px; /* Increased padding */
-  border-radius: 15px; /* Increased roundness */
+  background-color: rgba(39, 40, 41, 0.95); /* Slight transparency */
+  padding: 40px;
+  border-radius: 15px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
-  width: 350px; /* Adjusted width */
+  width: 380px;
   max-width: 95%;
   color: #FFF6E0;
-  z-index: 1000;
+  z-index: 2;
+  text-align: center;
+  margin-left: 50px; /* Shifted right */
 }
 
+/* Form Toggle */
 .form-toggle {
   display: flex;
-  justify-content: space-around; /* Evenly spaced buttons */
+  justify-content: space-between;
   margin-bottom: 25px;
 }
 
 .form-toggle button {
-  width: 48%; /* Slightly reduced width */
-  padding: 14px; /* Increased padding */
+  width: 48%;
+  padding: 14px;
   background-color: transparent;
-  border: 2px solid #FFF6E0;
+  border: 2px solid #faefb3;
   cursor: pointer;
-  font-size: 17px; /* Slightly increased font size */
+  font-size: 18px;
   border-radius: 12px 12px 0 0;
-  color: #FFF6E0;
+  color: #faefb3;
   font-weight: bold;
   transition: all 0.3s ease;
 }
 
 .form-toggle .active {
-  background-color: #FFF6E0;
+  background-color: #faefb3;
   color: #272829;
 }
 
+/* Form Styling */
 .form {
   display: flex;
   flex-direction: column;
 }
 
 .form input {
-  padding: 14px; /* Increased padding */
+  padding: 14px;
   margin-bottom: 15px;
-  border: 1.5px solid #FFF6E0;
-  border-radius: 8px; /* Increased roundness */
+  border: 1.5px solid #faefb3;
+  border-radius: 8px;
   background-color: #111;
   color: #FFF6E0;
-  width: 100%;
-  font-size: 17px; /* Increased font size */
+  width: 90%;
+  font-size: 17px;
   transition: all 0.3s ease;
 }
 
@@ -133,79 +143,85 @@ html {
   color: #bbb;
 }
 
+/* Submit Button */
 .form button {
   padding: 14px;
-  background-color: #FFF6E0;
+  background: linear-gradient(45deg, #faefb3, #b0a583);
   color: #272829;
   border: none;
-  border-radius: 8px; /* Increased roundness */
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 17px; /* Increased font size */
+  font-size: 20px;
   transition: all 0.3s ease;
+  margin-bottom: 15px;
 }
 
 .form button:hover {
-  background-color: #f2d26f;
+  background: linear-gradient(45deg, #faefb3, #FFF6E0);
   transform: scale(1.05);
+  box-shadow: 0 0 10px #faefb3;
 }
 
+/* Links */
 .form a {
-  color: #FFF6E0;
+  color: #faefb3;
   text-decoration: none;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
   text-align: right;
   font-weight: bold;
-  font-size: 15px; /* Adjusted font size */
+  font-size: 15px;
 }
 
 .form a:hover {
   text-decoration: underline;
 }
 
-.form p {
-  margin-top: 18px;
-  text-align: center;
-  color: #FFF6E0;
-  font-size: 15px; /* Adjusted font size */
-}
-
+/* Error Message */
 .error-message {
   color: #FFF6E0;
   background-color: #222;
   padding: 14px;
   margin-top: 18px;
-  border-radius: 8px; /* Increased roundness */
+  border-radius: 8px;
   text-align: center;
   font-weight: bold;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
+/* Responsiveness */
 @media (max-width: 1024px) {
   .container {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      gap: 30px;
   }
 
   .text-container {
-    max-width: 80%;
-    text-align: center;
+      max-width: 80%;
+      margin-left: 0; /* Remove left shift for smaller screens */
   }
 
   .form-container {
-    width: 90%;
-    margin-top: 30px;
+      width: 90%;
+      margin-left: 0; /* Remove right shift for smaller screens */
   }
 }
 
 @media (max-width: 768px) {
   .form-container {
-    width: 95%;
+      width: 95%;
   }
 
   .form-toggle button {
-    font-size: 16px;
-    padding: 12px;
+      font-size: 16px;
+      padding: 12px;
+  }
+
+  .text-container p:nth-child(1) {
+      font-size: 2.5rem;
+  }
+
+  .text-container p {
+      font-size: 1.6em;
   }
 }
