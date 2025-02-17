@@ -3,8 +3,8 @@ import Home from "./pages/Home";
 import ExerciseTracker from "./components/ExerciseTracker"; 
 import Login from "./pages/login/Login";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import WelcomePage from './pages/welcomePage';
-import NextPage from './pages/NextPage';
+import WelcomePage from './pages/welcome/welcomePage';
+import NextPage from './pages/welcome/NextPage';
 
 function App() {
   return (
