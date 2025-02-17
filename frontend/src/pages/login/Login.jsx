@@ -8,6 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 import "./login.css";
 
 const Login = () => {
+
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -20,40 +21,36 @@ const Login = () => {
 
   // API base URL and Google Client ID
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api/auth";
-  const GOOGLE_CLIENT_ID = "1038404365456-728tu6ukd3akdmbvdp32o2vl4rf5epe2.apps.googleusercontent.com"; // Your Google Client ID
+  const GOOGLE_CLIENT_ID = "1038404365456-728tu6ukd3akdmbvdp32o2vl4rf5epe2.apps.googleusercontent.com";
 
-  // Handle input change
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.id]: e.target.value });
   };
 
-  // Handle Register
   const handleRegister = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post(`${API_URL}/register`, credentials);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      navigate("/");
+      navigate("/welcomePage");
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response?.data || { message: "Something went wrong" } });
     }
   };
 
-  // Handle Login
   const handleLogin = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post(`${API_URL}/login`, credentials);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
-      navigate("/");
+      navigate("/welcomePage");
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response?.data || { message: "Invalid credentials" } });
     }
   };
 
-  // Handle Google Login Success
   const handleGoogleSuccess = async (credentialResponse) => {
     const tokenId = credentialResponse.credential;
     try {
@@ -63,18 +60,16 @@ const Login = () => {
       dispatch({ type: "LOGIN_START" });
       const res = await axios.post(`${API_URL}/google-login`, { tokenId });
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
-      navigate("/");
+      navigate("/welcomePage");
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response?.data || { message: "Google login failed" } });
     }
   };
 
-  // Handle Google Login Failure
   const handleGoogleFailure = (error) => {
     console.error("Google Sign In was unsuccessful. Try again later.", error);
   };
 
-  // Toggle between login and register based on route
   const [isLogin, setIsLogin] = useState(location.pathname === "/login");
 
   useEffect(() => {
@@ -82,9 +77,18 @@ const Login = () => {
   }, [isLogin, navigate]);
 
   return (
-    <GoogleOAuthProvider clientId="1038404365456-728tu6ukd3akdmbvdp32o2vl4rf5epe2.apps.googleusercontent.com"> {/* Your Google Client ID here */}
+    <GoogleOAuthProvider clientId="1038404365456-728tu6ukd3akdmbvdp32o2vl4rf5epe2.apps.googleusercontent.com">
       <div className="container">
         <div className="overlay"></div>
+
+        {/* Text Container */}
+        <div className="text-container">
+          <p>Flex It Out</p>
+          <p>Are You Ready</p>
+          <p>Time To Make You Fit</p>
+        </div>
+
+        {/* Form Container */}
         <div className="form-container">
           <div className="form-toggle">
             <button className={isLogin ? "active" : ""} onClick={() => setIsLogin(true)}>
@@ -95,7 +99,6 @@ const Login = () => {
             </button>
           </div>
           <div className="form">
-            <h2>{isLogin ? "Login Form" : "Register"}</h2>
             <input
               type="text"
               placeholder="Username"
