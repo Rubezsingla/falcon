@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import './Diet.css';
 
 function DietChart() {
@@ -8,7 +10,7 @@ function DietChart() {
     const [height, setHeight] = useState('');
     const [bmi, setBmi] = useState(null);
     const [dietPlan, setDietPlan] = useState(null);
-
+     const { user, logout } = useContext(AuthContext);
     // Function to calculate BMI and suggest a diet plan
     const calculateBMI = () => {
         if (!weight || !height) {
@@ -89,7 +91,14 @@ function DietChart() {
                 <button onClick={() => navigate('/')}>Home</button>
                 <button onClick={() => navigate('/diet-chart')}>Diet Chart</button>
                 <button onClick={() => navigate('/challenge-friend')}>Challenge a Friend</button>
-                <button onClick={() => navigate('/login')}>Logout</button>
+                {user ? (
+          <div className="navItems">
+            <span className="username">Welcome,  {user.username}</span>
+          </div>
+        ) : (
+          <div className="navItems"> <p>Welcome, Fitness Warrior!</p>
+          </div>
+        )}
             </nav>
 
             <h2>Personalized Diet Chart</h2>
