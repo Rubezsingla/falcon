@@ -84,8 +84,9 @@ const Login = () => {
         {/* Text Container */}
         <div className="text-container">
           <p>Flex It Out</p>
-          <p>Are You Ready</p>
-          <p>Time To Make You Fit</p>
+          <p>Are You Ready?</p>
+          <p>It's Time to Make</p>
+          <p>You Fit</p>
         </div>
 
         {/* Form Container */}
