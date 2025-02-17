@@ -18,12 +18,10 @@ function WelcomePage() {
                 <button onClick={() => handleNavigation('/challenge-friend')}>Challenge a Friend</button>
                 <button onClick={() => handleNavigation('/login')}>Logout</button>
             </nav>
-
             {/* Background Video */}
             <video autoPlay loop muted className="background-video">
                 <source src="/video.mp4" type="video/mp4" />
             </video>
-
             {/* Welcome Box */}
             <div className="welcome-box">
                 <h1>FLEX IT OUT</h1>
