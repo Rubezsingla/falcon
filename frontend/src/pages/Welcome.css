@@ -66,7 +66,7 @@ button {
     padding: 14px 30px;
     font-size: 20px;
     color: #fff;
-    background: linear-gradient(45deg, #d8d9da, #fff6e0);
+    background: linear-gradient(45deg, #333435, #fff6e0);
     border: none;
     border-radius: 30px;
     cursor: pointer;
@@ -78,7 +78,7 @@ button {
 
 /* Button Hover Effect */
 button:hover {
-    background: linear-gradient(45deg, #d8d9da, #fff6e0);
+    background: linear-gradient(45deg, #333435, #fff6e0);
     box-shadow: 0 0 15px #fff6e0;
     transform: scale(1.1);
 }
