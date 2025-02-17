@@ -3,6 +3,8 @@ import Home from "./pages/Home";
 import ExerciseTracker from "./components/ExcerciseTracker"; 
 import Login from "./pages/login/Login";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import WelcomePage from './pages/welcome/welcomePage';
+import NextPage from './pages/welcome/NextPage';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
           <Route path="/exercise" element={<ExerciseTracker/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Login />} />
+          <Route path="/welcomePage" element={<WelcomePage />} />
+          <Route path="/nextpage" element={<NextPage />} />
         </Routes>
       </Router>
     </GoogleOAuthProvider>
