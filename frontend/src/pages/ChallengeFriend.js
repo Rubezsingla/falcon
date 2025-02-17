@@ -1,52 +1,47 @@
 import React, { useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
+import { useParams } from "react-router-dom";
+import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 
 const ChallengeFriend = () => {
-  const { roomId } = useParams();
+  const { roomId } = useParams(); // Get roomId from URL params
   const meetingRef = useRef(null);
-  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     if (!roomId) {
-      console.log("Invalid roomId");
-      // Redirect to home if roomId is invalid
-      navigate('/');
-      return; // Exit the effect early
+      console.error("Room ID is missing!");
+      return;
     }
 
-    const myMeeting = async () => {
-      const appID = 792978043;
-      const serverSecret = "974a18fb33b9a659e846548cca7d36c7";
-      const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-        appID,
-        serverSecret,
-        roomId,
-        Date.now().toString(),
-        "Rubez Singla"
-      );
-      const zp = ZegoUIKitPrebuilt.create(kitToken);
-      zp.joinRoom({
-        container: meetingRef.current,
-        scenario: {
-          mode: ZegoUIKitPrebuilt.LiveStreaming,
-        },
-      });
-    };
+    const appID = 792978043; // Your Zego app ID
+    const serverSecret = "974a18fb33b9a659e846548cca7d36c7"; // Your Zego server secret
+    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+      appID,
+      serverSecret,
+      roomId, // Use dynamic roomId from the URL
+      Date.now().toString(),
+      "Rubez Singla" // Display name
+    );
 
-    // Only initialize the meeting if roomId is valid
-    if (roomId) {
-      myMeeting();
-    }
+    const zp = ZegoUIKitPrebuilt.create(kitToken);
+    zp.joinRoom({
+      container: meetingRef.current,
+      scenario: {
+        mode: ZegoUIKitPrebuilt.LiveStreaming,
+      },
+    });
 
     return () => {
       if (meetingRef.current) {
-        meetingRef.current.innerHTML = "";
+        meetingRef.current.innerHTML = ""; // Cleanup on unmount
       }
     };
-  }, [roomId, navigate]); // Ensure navigate is included as a dependency
+  }, [roomId]); // Dependency array ensures effect runs when roomId changes
 
-  return <div className="room-page"><div ref={meetingRef} /></div>;
+  return (
+    <div>
+      <div ref={meetingRef} /> {/* Zego Cloud video container */}
+    </div>
+  );
 };
 
 export default ChallengeFriend;
