@@ -4,7 +4,7 @@ import ExerciseTracker from "./components/ExcerciseTracker";
 import Login from "./pages/login/Login";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import WelcomePage from './pages/welcome/welcomePage';
-import NextPage from './pages/welcome/NextPage';
+import DashBoard from './pages/Dashboard';
 
 function App() {
   return (
@@ -16,11 +16,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Login />} />
           <Route path="/welcomePage" element={<WelcomePage />} />
-          <Route path="/nextpage" element={<NextPage />} />
+          <Route path="/dashboard" element={<DashBoard />} />
         </Routes>
       </Router>
     </GoogleOAuthProvider>
   );
 }
-
 export default App;
