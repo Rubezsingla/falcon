@@ -67,6 +67,10 @@ html {
   max-width: 90%; /* Adjusted width */
   font-family: 'Montserrat', sans-serif;
 }
+.text-container p:nth-child(4) {
+  max-width: 90%; /* Adjusted width */
+  font-family: 'Montserrat', sans-serif;
+}
 
 .form-container {
   background-color: #272829;

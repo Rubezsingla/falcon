@@ -1,10 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
-import ExerciseTracker from "./components/ExerciseTracker"; 
+import ExerciseTracker from "./components/ExcerciseTracker"; 
 import Login from "./pages/login/Login";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import WelcomePage from './pages/welcome/welcomePage';
-import NextPage from './pages/welcome/NextPage';
+import DashBoard from './pages/Dashboard';
 
 function App() {
   return (
@@ -12,15 +12,14 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/exercise" element={<ExerciseTracker />} />
+          <Route path="/exercise" element={<ExerciseTracker/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Login />} />
           <Route path="/welcomePage" element={<WelcomePage />} />
-          <Route path="/nextpage" element={<NextPage />} />
+          <Route path="/dashboard" element={<DashBoard />} />
         </Routes>
       </Router>
     </GoogleOAuthProvider>
   );
 }
-
 export default App;
