@@ -1,6 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Welcome.css';
+const openExerciseApp = () => {
+    window.open("http://localhost:3001", "_blank"); // Replace with actual deployed URL
+  };
 
 function WelcomePage() {
     const navigate = useNavigate();
@@ -29,7 +32,7 @@ function WelcomePage() {
                 <h1>FLEX IT OUT</h1>
                 <h2>Welcome, Fitness Warrior!</h2>
                 <p className="tagline">"Push your limits. Achieve greatness."</p>
-                <button onClick={() => handleNavigation('/exercise')}>Get Started</button>
+                <button onClick={openExerciseApp}>Get Started</button>
             </div>
         </div>
     );
